@@ -9,11 +9,12 @@ import main.java.com.ulisses.chess.bord.Board;
 import main.java.com.ulisses.chess.utils.Color;
 
 public class Pawn extends Piece{
-	
+
 
 	public Pawn(int x, int y, Color color) {
 		super(x, y, color, (color == Color.black)?"chess/pawn1.png":"chess/pawn.png");
 	}
+
 
 	@Override
 	public boolean isValidMove(int newX, int newY, Board board) {
@@ -22,7 +23,6 @@ public class Pawn extends Piece{
 
         // Movimento normal (uma casa para frente)
         if (newX == x && newY == y + direction && board.getPiece(newX, newY) == null) {
-        	System.out.println("Movimeto valido");
 
             return true;
         }
@@ -30,7 +30,6 @@ public class Pawn extends Piece{
         // Movimento inicial (duas casas para frente)
         if (newX == x && newY == y + 2 * direction && y == startRow &&
             board.getPiece(newX, newY) == null && board.getPiece(newX, y + direction) == null) {
-        	System.out.println("Movimeto valido");
 
             return true;
         }
@@ -39,13 +38,23 @@ public class Pawn extends Piece{
         if ((newX == x - 1 || newX == x + 1) && newY == y + direction) {
             Piece targetPiece = board.getPiece(newX, newY);
             if (targetPiece != null && targetPiece.getColor() != this.getColor()) {
-            	System.out.println("Movimeto valido");
                 return true;
             }
         }
-    	System.out.println("Movimeto Invalido");
 
         return false;  // Movimento inválido
+	}
+
+	public boolean validatePromote() {
+		if (color == Color.black && y== 7) {
+			return true;
+		}
+
+		if (color == Color.white && y == 0) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

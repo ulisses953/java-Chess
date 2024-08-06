@@ -16,7 +16,7 @@ public abstract class Piece {
 	protected int x,y;
 	protected Color color;
 	protected BufferedImage image;
-	
+
 	public int getX() {
 		return x;
 	}
@@ -36,19 +36,19 @@ public abstract class Piece {
 	public Color getColor() {
 		return color;
 	}
-	
+
 	protected void loadImage(String path) {
 		  try {
-			  String path2 = this.getClass().getResource("../../../resorce/").getPath();
-			  
-	            image = ImageIO.read(new File(path2+path));
+			  //String path2 = this.getClass().getResource("../../../resorce/").getPath();
+
+	            image = ImageIO.read(new File("./resorce/"+path));
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }
 	}
-	
+
 	public abstract boolean isValidMove(int newX, int newY,Board board);
-	
+
 	  public void draw(Graphics2D g2d, int tileSize) {
 	        int drawX = this.x * tileSize;
 	        int drawY = this.y * tileSize;
@@ -60,5 +60,13 @@ public abstract class Piece {
 		this.y = y;
 		this.color = color;
         loadImage(imagePath);
+	}
+	public Piece(String imagePath) {
+		loadImage(imagePath);
+	}
+
+	@Override
+	public String toString() {
+		return "Piece [x=" + x + ", y=" + y + ", color=" + color + "]";
 	}
 }

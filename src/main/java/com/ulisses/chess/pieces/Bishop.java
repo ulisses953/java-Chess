@@ -11,30 +11,33 @@ public class Bishop extends Piece{
 
 	@Override
 	public boolean isValidMove(int newX, int newY, Board board) {
-		int deltaX = Math.abs(newX - x);
-        int deltaY = Math.abs(newY - y);
+	        int deltaX = Math.abs(newX - this.getX());
+	        int deltaY = Math.abs(newY - this.getY());
 
-        // Verificar se o movimento é diagonal
-        if (deltaX == deltaY) {
-            int stepX = (newX - x) / deltaX;
-            int stepY = (newY - y) / deltaY;
+	        // Verifica se o movimento é diagonal
+	        if (deltaX == deltaY) {
+	            int stepX = (newX > this.getX()) ? 1 : -1;
+	            int stepY = (newY > this.getY()) ? 1 : -1;
+	            int x = this.getX() + stepX;
+	            int y = this.getY() + stepY;
 
-            // Verificar se o caminho está livre
-            for (int i = 1; i < deltaX; i++) {
-                int checkX = x + i * stepX;
-                int checkY = y + i * stepY;
-                if (board.getPiece(checkX, checkY) != null) {
-                    return false;
-                }
-            }
+	            // Verifica se o caminho está livre
+	            while (x != newX && y != newY) {
+	                if (board.getPiece(x, y) != null) {
+	                    return false;
+	                }
+	                x += stepX;
+	                y += stepY;
+	            }
 
-            Piece targetPiece = board.getPiece(newX, newY);
-            // Verificar se a casa de destino está vazia ou tem uma peça de cor diferente
-            if (targetPiece == null || targetPiece.getColor() != this.getColor()) {
-                return true;
-            }
-        }
-        return false; // Movimento inválido
+	            // Verifica se a posição final está vazia ou contém uma peça inimiga
+	            Piece targetPiece = board.getPiece(newX, newY);
+	            if (targetPiece == null || targetPiece.getColor() != this.getColor()) {
+	                return true;
+	            }
+	        }
+
+	        return false;
 	}
 
 }
